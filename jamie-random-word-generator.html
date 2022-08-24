@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Words Generator</title>
+</head>
+<style>
+
+*{
+    margin: 10px
+}
+#text-box{
+    width: 100%;
+    height: 75%;
+}
+#form{
+height: auto;
+}
+#button{
+  width: 100%;
+  height: 10%;
+}
+
+ul{
+    list-style-type: none;
+}
+
+li{
+    margin: 8px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+</style>
+<body>
+    <h1 id="header">Random Words<span id="header-span"></span></h1>
+    
+    <ul id="suggestions-list"></ul>
+        <form id="form">
+            <!-- <input type="text" id="text-box"> -->
+            <button>Click me!</button>
+
+        </form>
+    
+        <form>
+            <label for="words-quantity">Number of words needed:</label>
+            <input type="number" id="words-quantity" name="Number of Words Needed" label="Number of Words Needed" min="1" value="1">
+            <label for="teams-quantity">Number of Teams:</label>
+            <input type="number" id="teams-quantity" name="Number of Teams" label="Number of Teams" min="1" value="1">
+        </form>
+</body>
+
+<script>
+
+// ARRAY OF WORDS AND METHODS
+const words = ["Again", "Alone", "Angel", "Angry", "Animal", "Apart", "Arms", "Arriving", "Autumn", "Beach", "Bed", "Begging", "Believe", "Big", "Bird", "Bite", "Bitter", "Black", "Blood", "Blue", "Boat", "Body", "Bone", "Book", "Born", "Brave", "Breath", "Bridge", "Broken", "Brother", "Brown", "Build", "Buried", "Call", "Car", "Care", "Carry", "Cat", "Chain", "Chance", "Change", "Chase", "Child", "Church", "Circle", "Circus", "City", "Climb", "Close", "Cloud", "Coffee", "Crazy", "Cross", "Crowd", "Dance", "Darkness", "Dawn", "Deep", "Deliver", "Devil", "Doctor", "Dog", "Door", "Dream", "Dress", "Drink", "Dusk", "Dust", "Early", "Earth", "Easy", "Electric", "Enemy", "Escape", "Eye", "Falling", "Family", "Father", "Fear", "Feet", "Fight", "Fire", "First", "Fix", "Floor", "Flower", "Fly", "Food", "Fool", "Force", "Forget", "Forgive", "Found", "Freedom", "Friend", "Fruit", "Game", "Garden", "Ghost", "Gift", "Glass", "Gold", "Gone", "Goodbye", "Green", "Grey", "Grow", "Half", "Hand", "Harbour", "Hard", "Heart", "Heavy", "Hello", "Help", "Hide", "High", "Hold", "Hole", "Holiday", "Home", "Hope", "Hotel", "Hunger", "Hurry", "Hurt", "Ice", "Inside", "Island", "Jealousy", "Jewel", "Joke", "Joy", "Judge", "Jump", "Kill", "Kiss", "Knife", "Late", "Laughter", "Leaving", "Lie", "Light", "Lock", "Loose", "Lost", "Low", "Luck", "Magic", "Man", "Medicine", "Message", "Money", "Monster", "Moon", "More", "Morning", "Mother", "Mountain", "Mouth", "Movie", "Music", "Neighbour", "New", "Next", "Noise", "Ocean", "Old", "Open", "Outside", "Paint", "Party", "Patience", "Pattern", "Peace", "Plane", "Please", "Poison", "Poor", "Pray", "Pretend", "Promise", "Push", "Question", "Rain", "Reality", "Red", "Reflection", "Regret", "Remember", "Returning", "Revenge", "Rhythm", "Rich", "River", "Road", "Rock", "Royal", "Rule", "Running", "Sacrifice", "Safe", "Sand", "Satisfy", "School", "Second", "Secret", "Seek", "Seize", "Shadow", "Shake", "Shoes", "Shoulder", "Shout", "Show", "Sickness", "Sideways", "Silence", "Silver", "Siren", "Sister", "Skin", "Sky", "Sleep", "Slow", "Small", "Smell", "Smile", "Smoke", "Snow", "Soft", "Soothe", "Sour", "Space", "Spice", "Spring", "Stand", "Star", "Stay", "Steal", "Steps", "Stop", "Storm", "Stranger", "Street", "Strong", "Suddenly", "Suitcase", "Summer", "Sun", "Sweet", "Swim", "Taste", "Tears", "Thirst", "Thread", "Three", "Tight", "Time", "Today", "Together", "Tomorrow", "Tonight", "Touch", "Train", "Trap", "Tree", "Trust", "Truth", "Try", "Two", "Understand", "Voice", "Wait", "Wake", "Walk", "Wall", "Want", "War", "Waste", "Well", "When?", "Where?", "Whisper", "White", "Who?", "Why?", "Wild", "Win", "Wind", "Window", "Winter", "Woman", "Words", "Work", "Worry", "Year", "Yellow", "Yesterday", "Young"]
+const methodList = ["Make a 1-8 note melody", "Use only 3 notes", "Start with a drone", "Use only loops"]
+
+
+// REFERENCE POINTS FOR HTML ELEMENTS
+const wordForm = document.getElementById("form");
+const headingChange = document.getElementById("header-span");
+
+// RANDOM GENERATORS
+function randomWordsGenerator(words){
+    let randomWords = []
+    let numberofWordsToReturn = document.getElementById("words-quantity").value;
+    for (let i = 0; i < numberofWordsToReturn;i++){
+        let newWord = words[Math.floor(Math.random()*words.length)]
+        randomWords.push(newWord)
+    }
+    return randomWords;
+ }
+
+ function randomMethodGenerator(methodList){
+    return methodList[Math.floor(Math.random()*methodList.length)]
+ }
+
+// SCRIPT TO TRIGGER EVENT WHEN BUTTON IS PRESSED
+wordForm.addEventListener("submit", (event) => {
+    
+    // PREVENT PAGE FROM AUTO REFRESHING ON CLICK
+    event.preventDefault();
+    
+    // let numberofWordsToReturn = document.getElementById("words-quantity").value;
+    let numberOfTeams = document.getElementById("teams-quantity").value;
+
+    // REFERENCE POINT FOR DYNAMIC <UL></UL> TAG
+    const suggestionList = document.getElementById("suggestions-list");
+
+    // REMOVE PREVIOUS SUGGESTIONS ON CLICK
+    suggestionList.innerHTML = ""
+
+    // TEST BUTTON EVENT WORKS ON CLICK
+    console.log("Boop! You clicked me!")
+
+// FOR LOOP TO LOOP THROUGH NUMBER OF TEAMS AND GET NUMBER OF RANDOM WORDS REQUIRED
+for (let i = 0; i < numberOfTeams;i++){
+
+// LOGS RESULTS TO CONSOLE
+console.log(`Team ${i+1} your words are ${randomWordsGenerator(words)} and you have to ${randomMethodGenerator(methodList)}` )
+
+// ADDS SUGGESTIONS TO UL TAGS ABOVE <form>
+suggestionList.innerHTML += `<li>Team ${i+1} your words are ${randomWordsGenerator(words)} and you have to ${randomMethodGenerator(methodList)}</li>`
+}
+
+// CHANGE HEADER SPAN TAG
+headingChange.innerHTML = "have been generated:"
+})
+
+</script>
+</html>
